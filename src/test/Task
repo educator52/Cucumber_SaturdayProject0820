@@ -1,0 +1,6 @@
+1)	Navigate to http://automationpractice.com/
+2)	Sign in to website
+3)	Click on facebook , twitter , youtube , google icons
+4)	Verify navigated to facebook , twitter , youtube , google pages
+
+	Create a runner for all feature files, generate a extend report.
