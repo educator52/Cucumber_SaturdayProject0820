@@ -13,7 +13,6 @@ import org.testng.Assert;
 import poms.ProjectPOM;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 
@@ -62,28 +61,27 @@ public class ProjectSteps {
         List<List<String>> rows = table.asLists(String.class);
         for(List<String> column: rows) {
             for (String name: column) {
-                String mainWindowHandle = driver.getWindowHandle();
                 WebElement element = getElement(name);
                 element.click();
-                switchWindow();
-                String title = driver.getCurrentUrl();
+                String title = getNextWindowsUrl();
                 Assert.assertTrue(title.contains(name));
-                driver.close();
-                driver.switchTo().window(mainWindowHandle);
             }
         }
         driver.quit();
     }
 
-    public void switchWindow(){
+    public String getNextWindowsUrl(){
         String mainWindowHandle = driver.getWindowHandle();
         Set<String> windowHandles = driver.getWindowHandles();
         for (String handle: windowHandles) {
             if(!handle.equals(mainWindowHandle)) {
                 driver.switchTo().window(handle);
-//                        System.out.println("Window Title: " +  driver.getTitle());
             }
         }
+        String url = driver.getCurrentUrl();
+        driver.close();
+        driver.switchTo().window(mainWindowHandle);
+        return url;
     }
 
     public WebElement getElement(String name){
